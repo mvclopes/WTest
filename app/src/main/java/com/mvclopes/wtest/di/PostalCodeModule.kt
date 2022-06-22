@@ -5,7 +5,6 @@ import com.mvclopes.wtest.data.datasource.PostalCodeDatasourceImpl
 import com.mvclopes.wtest.data.datasource.local.db.PostalCodeDatabase
 import com.mvclopes.wtest.data.datasource.local.db.getDataBase
 import com.mvclopes.wtest.data.repository.PostalCodeRepositoryImpl
-import com.mvclopes.wtest.domain.repository.PostalCodeRepository
 import com.mvclopes.wtest.domain.usecase.ReadCsvFileUseCase
 import com.mvclopes.wtest.presentation.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

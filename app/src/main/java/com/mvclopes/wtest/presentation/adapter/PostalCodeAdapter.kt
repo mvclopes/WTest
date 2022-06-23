@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mvclopes.wtest.R
 import com.mvclopes.wtest.databinding.PostalCodeItemLayoutBinding
 import com.mvclopes.wtest.domain.model.PostalCode
 
@@ -34,7 +35,13 @@ object PostalCodeDiffCallback: DiffUtil.ItemCallback<PostalCode>() {
 class PostalCodeViewHolder private constructor(private val binding: PostalCodeItemLayoutBinding):
     RecyclerView.ViewHolder(binding.root) {
     fun bind(postalCode: PostalCode){
-        binding.postalCodeLabel.text = postalCode.postalCodeNumber
+        val postalCodeNumber = binding.root.resources
+            .getString(
+                R.string.postal_code_mask,
+                postalCode.postalCodeNumber,
+                postalCode.postalCodeExtensionNumber
+            )
+        binding.postalCodeLabel.text = postalCodeNumber
         binding.postalDesignationLabel.text = postalCode.postalDesignation
     }
 

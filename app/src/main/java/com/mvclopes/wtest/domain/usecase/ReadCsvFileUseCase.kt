@@ -5,19 +5,27 @@ import android.util.Log
 import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
 import com.mvclopes.wtest.domain.repository.PostalCodeRepository
 import com.mvclopes.wtest.utils.COMMA_SEPARATOR
+import com.mvclopes.wtest.utils.CSV_DIR_NAME
+import com.mvclopes.wtest.utils.CSV_FILE_NAME
 import java.io.BufferedReader
+import java.io.DataInputStream
+import java.io.File
+import java.io.FileInputStream
 import java.io.InputStreamReader
 
 class ReadCsvFileUseCase(
     private val context: Context,
-    private val repository: PostalCodeRepository
 ) {
-    operator fun invoke() {
+    operator fun invoke(): List<PostalCodeEntity> {
+        val postalCodeList = mutableListOf<PostalCodeEntity>()
         try {
-            val inputStream = context.assets.open("my-files.csv")
-            val iterator = BufferedReader(InputStreamReader(inputStream)).lineSequence().iterator()
-            iterator.next() // Para garantir que a primeira linha (cabeçalhos) não seja lida
-            val postalCodeList = mutableListOf<PostalCodeEntity>()
+            val fileInputStream = FileInputStream(context.getExternalFilesDir("$CSV_DIR_NAME/$CSV_FILE_NAME"))
+            val iterator = BufferedReader(InputStreamReader(DataInputStream(fileInputStream)))
+                .lineSequence()
+                .iterator()
+
+            // To ensure that the first line (headers) is not read
+            iterator.next()
 
             while (iterator.hasNext()) {
                 val row = iterator.next().split(COMMA_SEPARATOR)
@@ -30,9 +38,10 @@ class ReadCsvFileUseCase(
                 )
                 postalCodeList.add(postalCodeEntity)
             }
-            repository.insertAll(postalCodeList)
+            return postalCodeList
         } catch (e:Exception) {
-            Log.i("TAG_CSV", "exception: ${e.message}")
+            Log.i("TAG_ReadCsvFileUseCase", "exception: ${e.message}")
         }
+        return postalCodeList
     }
 }

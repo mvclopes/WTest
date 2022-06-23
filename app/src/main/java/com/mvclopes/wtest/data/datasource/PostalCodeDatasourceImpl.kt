@@ -20,4 +20,8 @@ class PostalCodeDatasourceImpl (
         return flow { emit(postalCodeDao.insertAll(postalCodeList)) }
     }
 
+    override fun isDatabaseEmpty(): Flow<Boolean> {
+        return flow { emit(postalCodeDao.isDatabaseEmpty() == null) }
+    }
+
 }

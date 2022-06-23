@@ -7,4 +7,5 @@ interface PostalCodeDatasource {
     fun getAll(): Flow<List<PostalCodeEntity>>
     fun insertPostalCode(postalCode: PostalCodeEntity): Flow<Unit>
     fun insertAll(postalCodeList: List<PostalCodeEntity>): Flow<Unit>
+    fun isDatabaseEmpty(): Flow<Boolean>
 }

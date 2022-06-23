@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WTest</string>
+    <string name="postal_code_mask">%s-%s</string>
 </resources>

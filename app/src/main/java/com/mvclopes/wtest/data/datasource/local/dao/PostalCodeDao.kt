@@ -5,12 +5,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PostalCodeDao {
 
-    @Query("SELECT * FROM PostalCodeEntity")
+    @Query("SELECT * FROM PostalCodeEntity LIMIT 100")
     suspend fun getAll(): List<PostalCodeEntity>
 
     @Insert(onConflict = REPLACE)
@@ -18,4 +17,7 @@ interface PostalCodeDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insertPostalCode(postalCode: PostalCodeEntity)
+
+    @Query("SELECT * FROM PostalCodeEntity LIMIT 1")
+    suspend fun isDatabaseEmpty(): PostalCodeEntity?
 }

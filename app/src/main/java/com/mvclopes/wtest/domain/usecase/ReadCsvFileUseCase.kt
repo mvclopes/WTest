@@ -13,9 +13,8 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
 
-class ReadCsvFileUseCase(
-    private val context: Context,
-) {
+class ReadCsvFileUseCase(private val context: Context) {
+
     operator fun invoke(): List<PostalCodeEntity> {
         val postalCodeList = mutableListOf<PostalCodeEntity>()
         try {

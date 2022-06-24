@@ -32,8 +32,7 @@ class ReadCsvFileUseCase(private val context: Context) {
                 val postalCodeEntity = PostalCodeEntity(
                     localityCode = row[2],
                     localityName = row[3],
-                    postalCodeNumber = row[14],
-                    postalCodeExtensionNumber = row[15],
+                    postalCodeNumber = "${row[14]}-${row[15]}",
                     postalDesignation = row[16],
                 )
                 postalCodeList.add(postalCodeEntity)

@@ -35,13 +35,7 @@ object PostalCodeDiffCallback: DiffUtil.ItemCallback<PostalCode>() {
 class PostalCodeViewHolder private constructor(private val binding: PostalCodeItemLayoutBinding):
     RecyclerView.ViewHolder(binding.root) {
     fun bind(postalCode: PostalCode){
-        val postalCodeNumber = binding.root.resources
-            .getString(
-                R.string.postal_code_mask,
-                postalCode.postalCodeNumber,
-                postalCode.postalCodeExtensionNumber
-            )
-        binding.postalCodeLabel.text = postalCodeNumber
+        binding.postalCodeLabel.text = postalCode.postalCodeNumber
         binding.postalDesignationLabel.text = postalCode.postalDesignation
     }
 

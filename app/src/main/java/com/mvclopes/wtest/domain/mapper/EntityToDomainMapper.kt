@@ -7,7 +7,6 @@ fun PostalCodeEntity.toDomain() = PostalCode(
     localityCode = localityCode,
     localityName = localityName,
     postalCodeNumber = postalCodeNumber,
-    postalCodeExtensionNumber = postalCodeExtensionNumber,
     postalDesignation = postalDesignation
 )
 

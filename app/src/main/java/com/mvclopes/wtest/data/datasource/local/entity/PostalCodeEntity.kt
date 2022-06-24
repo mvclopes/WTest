@@ -10,6 +10,5 @@ data class PostalCodeEntity(
     @ColumnInfo(name = "cod_localidade") val localityCode: String,
     @ColumnInfo(name = "nome_localidade") val localityName: String,
     @ColumnInfo(name = "num_cod_postal") val postalCodeNumber: String,
-    @ColumnInfo(name = "ext_cod_postal") val postalCodeExtensionNumber: String,
     @ColumnInfo(name = "desig_postal") val postalDesignation: String
 )

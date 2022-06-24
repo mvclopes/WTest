@@ -50,8 +50,13 @@ class HomeFragment : Fragment() {
     ): View {
         verifyPermission()
         onFinishedDownload()
-        binding.postalCodeRecycler.adapter = adapter
+        setRecyclerAdapter()
+        observeState()
 
+        return binding.root
+    }
+
+    private fun observeState() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
             binding.contentGroup.isVisible = isLoading.not()
@@ -59,8 +64,10 @@ class HomeFragment : Fragment() {
         viewModel.postalCodeList.observe(viewLifecycleOwner) { codes ->
             adapter.submitList(codes)
         }
+    }
 
-        return binding.root
+    private fun setRecyclerAdapter() {
+        binding.postalCodeRecycler.adapter = adapter
     }
 
     private fun onFinishedDownload() {

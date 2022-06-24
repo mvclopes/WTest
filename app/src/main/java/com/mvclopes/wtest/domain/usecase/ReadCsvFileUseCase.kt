@@ -1,6 +1,7 @@
 package com.mvclopes.wtest.domain.usecase
 
 import android.content.Context
+import android.os.Environment
 import android.util.Log
 import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
 import com.mvclopes.wtest.domain.repository.PostalCodeRepository
@@ -37,9 +38,10 @@ class ReadCsvFileUseCase(private val context: Context) {
                 )
                 postalCodeList.add(postalCodeEntity)
             }
+            Log.i("Tag_", "finished reading the .csv file")
             return postalCodeList
         } catch (e:Exception) {
-            Log.i("TAG_ReadCsvFileUseCase", "exception: ${e.message}")
+            Log.i("TAG_", "exception: ${e.message}")
         }
         return postalCodeList
     }

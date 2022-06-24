@@ -10,9 +10,7 @@
         android:id="@+id/textFieldValueLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="#20D81B60"
-        app:endIconDrawable="@android:drawable/ic_btn_speak_now"
-        app:endIconMode="custom"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

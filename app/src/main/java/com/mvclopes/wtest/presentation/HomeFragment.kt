@@ -9,7 +9,6 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.mvclopes.wtest.utils.CSV_DIR_NAME
 import com.mvclopes.wtest.utils.CSV_FILE_NAME
 import com.mvclopes.wtest.utils.URL_CSV_FILE
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 private const val PERMISSION_REQUESTED = Manifest.permission.READ_EXTERNAL_STORAGE
 
@@ -56,6 +54,11 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().unregisterReceiver(onDownloadComplete)
+    }
+
     private fun observeState() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
@@ -64,11 +67,6 @@ class HomeFragment : Fragment() {
         viewModel.postalCodeList.observe(viewLifecycleOwner) { codes ->
             adapter.submitList(codes)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        requireActivity().unregisterReceiver(onDownloadComplete)
     }
 
     private fun setRecyclerAdapter() {
@@ -81,7 +79,6 @@ class HomeFragment : Fragment() {
             IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
         )
     }
-
 
     private fun verifyPermission() {
         if (ContextCompat.checkSelfPermission(

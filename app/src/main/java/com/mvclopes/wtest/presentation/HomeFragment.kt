@@ -66,6 +66,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().unregisterReceiver(onDownloadComplete)
+    }
+
     private fun setRecyclerAdapter() {
         binding.postalCodeRecycler.adapter = adapter
     }

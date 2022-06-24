@@ -38,7 +38,6 @@ class ReadCsvFileUseCase(private val context: Context) {
                 )
                 postalCodeList.add(postalCodeEntity)
             }
-            Log.i("Tag_", "finished reading the .csv file")
             return postalCodeList
         } catch (e:Exception) {
             Log.i("TAG_", "exception: ${e.message}")

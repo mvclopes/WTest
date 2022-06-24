@@ -46,7 +46,6 @@ class HomeViewModel(
     }
 
     private fun handleIsDatabaseEmpty(isEmpty: Boolean) {
-        Log.i("TAG_", "IsDatabaseEmpty: $isEmpty")
         when (isEmpty) {
             true -> readCSV()
             else -> fetchData()
@@ -58,7 +57,6 @@ class HomeViewModel(
         viewModelScope.launch(dispatcher) {
             try {
                 repository.insertAll(postalCodeList).collect { fetchData() }
-                Log.i("TAG_ViewModel", "recorded data")
             } catch (e: Exception) {
                 Log.i("TAG_ViewModel", "exception inserting data: ${e.message}")
             }
@@ -73,7 +71,6 @@ class HomeViewModel(
                 .catch { Log.i("TAG_ViewModel", "exception getting data: ${it.message}") }
                 .collect {
                     _postalCodeList.value = it
-                    Log.i("TAG_ViewModel", "read data [size]: ${it.size}")
                 }
         }
     }

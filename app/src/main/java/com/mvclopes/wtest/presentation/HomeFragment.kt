@@ -40,7 +40,6 @@ class HomeFragment : Fragment() {
 
     private var onDownloadComplete: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctxt: Context?, intent: Intent?) {
-            Log.i("TAG_", "download finished")
             viewModel.isDatabaseEmpty()
         }
     }
@@ -60,13 +59,6 @@ class HomeFragment : Fragment() {
         viewModel.postalCodeList.observe(viewLifecycleOwner) { codes ->
             adapter.submitList(codes)
         }
-
-//        viewModel.state.observe(viewLifecycleOwner) { state ->
-//            Log.i("TAG_View", "data [size]: ${state.postalCodeList.size} - isLoading:${state.isLoading}")
-//            binding.progressBar.isVisible = state.isLoading
-//            binding.contentGroup.isVisible = state.isLoading.not()
-//            adapter.submitList(state.postalCodeList)
-//        }
 
         return binding.root
     }
@@ -97,8 +89,6 @@ class HomeFragment : Fragment() {
             .isNullOrEmpty()
             .not()
 
-        Log.i("Tag_", "fileAlreadyExists: $fileAlreadyExists")
-
         if (!fileAlreadyExists) downloadCSV() else viewModel.isDatabaseEmpty()
     }
 
@@ -110,7 +100,6 @@ class HomeFragment : Fragment() {
             .setAllowedOverMetered(true)
             .setDestinationInExternalFilesDir(requireContext(), CSV_DIR_NAME, CSV_FILE_NAME)
         val downloadManager = requireActivity().getSystemService(AppCompatActivity.DOWNLOAD_SERVICE) as DownloadManager
-        Log.i("TAG_", "download request")
         downloadManager.enqueue(request)
     }
 

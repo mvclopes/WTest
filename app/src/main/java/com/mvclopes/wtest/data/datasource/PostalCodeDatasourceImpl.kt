@@ -24,4 +24,19 @@ class PostalCodeDatasourceImpl (
         return flow { emit(postalCodeDao.isDatabaseEmpty() == null) }
     }
 
+    override fun searchByPostalCodeNumber(postalCodeNumber: String): Flow<List<PostalCodeEntity>> {
+        return flow { emit(postalCodeDao.searchByPostalCodeNumber(postalCodeNumber)) }
+    }
+
+    override fun searchByPostalDesignation(postalDesignation: String): Flow<List<PostalCodeEntity>> {
+        return flow { emit(postalCodeDao.searchByPostalDesignation(postalDesignation)) }
+    }
+
+    override fun searchByDesignationAndCodeNumber(
+        postalCodeNumber: String,
+        postalDesignation: String
+    ): Flow<List<PostalCodeEntity>> {
+        return flow { emit(postalCodeDao.searchByDesignationAndCodeNumber(postalCodeNumber, postalDesignation)) }
+    }
+
 }

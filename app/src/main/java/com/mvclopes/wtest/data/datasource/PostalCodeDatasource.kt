@@ -8,4 +8,10 @@ interface PostalCodeDatasource {
     fun insertPostalCode(postalCode: PostalCodeEntity): Flow<Unit>
     fun insertAll(postalCodeList: List<PostalCodeEntity>): Flow<Unit>
     fun isDatabaseEmpty(): Flow<Boolean>
+    fun searchByPostalCodeNumber(postalCodeNumber: String): Flow<List<PostalCodeEntity>>
+    fun searchByPostalDesignation(postalDesignation: String): Flow<List<PostalCodeEntity>>
+    fun searchByDesignationAndCodeNumber(
+        postalCodeNumber: String,
+        postalDesignation: String
+    ): Flow<List<PostalCodeEntity>>
 }

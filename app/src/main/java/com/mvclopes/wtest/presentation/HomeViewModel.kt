@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.mvclopes.wtest.domain.model.PostalCode
 import com.mvclopes.wtest.domain.repository.PostalCodeRepository
 import com.mvclopes.wtest.domain.usecase.ReadCsvFileUseCase
+import com.mvclopes.wtest.domain.usecase.VerifyCustomQueryUseCase
+import com.mvclopes.wtest.utils.CustomQuery
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -19,6 +21,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val readCsvFileUseCase: ReadCsvFileUseCase,
+    private val verifyCustomQueryUseCase: VerifyCustomQueryUseCase,
     private val repository: PostalCodeRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ): ViewModel() {
@@ -31,12 +34,42 @@ class HomeViewModel(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+    fun searchByCustomQuery(searchTerm: String) {
+        viewModelScope.launch(dispatcher) {
+            when (verifyCustomQueryUseCase(searchTerm)) {
+                CustomQuery.NumberQuery ->
+                    repository.searchByPostalCodeNumber("%$searchTerm%")
+                CustomQuery.TextQuery ->
+                    repository.searchByPostalDesignation("%$searchTerm%")
+                CustomQuery.TextAndNumberQuery -> textAndNumberQuery(searchTerm)
+            }
+        }
+    }
+
+    private fun textAndNumberQuery(searchTerm: String) {
+        val postalCodeNumber = "%${searchTerm.filter { it.isDigit() }}%"
+        val postalDesignation = "%${searchTerm.replace(" ","").filter { it.isDigit().not() }}%"
+        viewModelScope.launch {
+            repository.searchByDesignationAndCodeNumber(postalCodeNumber, postalDesignation)
+                .catch { handleError(it) }
+                .collect { handleOnSearch(it) }
+        }
+    }
+
+    private fun handleError(throwable: Throwable) {
+        Log.i("TAG_", "exception: ${throwable.message}")
+    }
+
+    private fun handleOnSearch(postalCodes: List<PostalCode>) {
+        if (!postalCodes.isNullOrEmpty()) _postalCodeList.value = postalCodes
+    }
+
     fun isDatabaseEmpty() {
         viewModelScope.launch {
             repository.isDatabaseEmpty()
                 .flowOn(dispatcher)
                 .onStart { isLoading(true) }
-                .catch { Log.i("TAG_ViewModel", "exception: ${it.message}") }
+                .catch { handleError(it) }
                 .collect { handleIsDatabaseEmpty(it) }
         }
     }
@@ -58,7 +91,7 @@ class HomeViewModel(
             try {
                 repository.insertAll(postalCodeList).collect { fetchData() }
             } catch (e: Exception) {
-                Log.i("TAG_ViewModel", "exception inserting data: ${e.message}")
+                handleError(e)
             }
         }
     }
@@ -68,7 +101,7 @@ class HomeViewModel(
             repository.getAll()
                 .flowOn(dispatcher)
                 .onCompletion { isLoading(false) }
-                .catch { Log.i("TAG_ViewModel", "exception getting data: ${it.message}") }
+                .catch { handleError(it) }
                 .collect {
                     _postalCodeList.value = it
                 }

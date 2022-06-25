@@ -27,4 +27,21 @@ class PostalCodeRepositoryImpl (
         return datasource.isDatabaseEmpty()
     }
 
+    override fun searchByPostalCodeNumber(postalCodeNumber: String): Flow<List<PostalCode>> {
+        return datasource.searchByPostalCodeNumber(postalCodeNumber).map { it.toDomain() }
+    }
+
+    override fun searchByPostalDesignation(postalDesignation: String): Flow<List<PostalCode>> {
+        return datasource.searchByPostalDesignation(postalDesignation).map { it.toDomain() }
+    }
+
+    override fun searchByDesignationAndCodeNumber(
+        postalCodeNumber: String,
+        postalDesignation: String
+    ): Flow<List<PostalCode>> {
+        return datasource
+            .searchByDesignationAndCodeNumber(postalCodeNumber, postalDesignation)
+            .map { it.toDomain() }
+    }
+
 }

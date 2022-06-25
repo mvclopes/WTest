@@ -20,7 +20,7 @@ private lateinit var INSTANCE: PostalCodeDatabase
                 INSTANCE = Room.databaseBuilder(
                     context.applicationContext,
                     PostalCodeDatabase::class.java,
-                    "users_db"
+                    "postal_code_db"
                 )
                     .fallbackToDestructiveMigration()
                     .build()

@@ -4,6 +4,7 @@ import com.mvclopes.wtest.data.datasource.PostalCodeDatasourceImpl
 import com.mvclopes.wtest.data.datasource.local.db.getDataBase
 import com.mvclopes.wtest.data.repository.PostalCodeRepositoryImpl
 import com.mvclopes.wtest.domain.usecase.ReadCsvFileUseCase
+import com.mvclopes.wtest.domain.usecase.VerifyCustomQueryUseCase
 import com.mvclopes.wtest.presentation.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.scope.Scope
@@ -14,6 +15,7 @@ val postalCodeModule = module {
         HomeViewModel(
             readCsvFileUseCase = getReadCsvFileUseCase(),
             repository = getPostalCodeRepository(),
+            verifyCustomQueryUseCase = VerifyCustomQueryUseCase()
         )
     }
 }

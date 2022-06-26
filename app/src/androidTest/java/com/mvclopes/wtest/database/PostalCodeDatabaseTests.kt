@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.mvclopes.wtest.data.datasource.local.dao.PostalCodeDao
-import com.mvclopes.wtest.data.datasource.local.db.PostalCodeDatabase
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.dao.PostalCodeDao
+import com.mvclopes.wtest.data.local.db.PostalCodeDatabase
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertNotNull

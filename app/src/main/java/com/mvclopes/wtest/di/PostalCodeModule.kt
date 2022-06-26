@@ -1,7 +1,7 @@
 package com.mvclopes.wtest.di
 
 import com.mvclopes.wtest.data.datasource.PostalCodeDatasourceImpl
-import com.mvclopes.wtest.data.datasource.local.db.getDataBase
+import com.mvclopes.wtest.data.local.db.getDataBase
 import com.mvclopes.wtest.data.repository.PostalCodeRepositoryImpl
 import com.mvclopes.wtest.domain.usecase.ReadCsvFileUseCase
 import com.mvclopes.wtest.domain.usecase.VerifyCustomQueryUseCase

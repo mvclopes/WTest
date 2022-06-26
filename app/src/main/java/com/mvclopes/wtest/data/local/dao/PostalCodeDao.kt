@@ -1,10 +1,10 @@
-package com.mvclopes.wtest.data.datasource.local.dao
+package com.mvclopes.wtest.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 
 @Dao
 interface PostalCodeDao {

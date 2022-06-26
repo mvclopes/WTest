@@ -1,7 +1,7 @@
 package com.mvclopes.wtest.data.repository
 
 import com.mvclopes.wtest.data.datasource.PostalCodeDatasource
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 import com.mvclopes.wtest.domain.mapper.toDomain
 import com.mvclopes.wtest.domain.model.PostalCode
 import com.mvclopes.wtest.domain.repository.PostalCodeRepository

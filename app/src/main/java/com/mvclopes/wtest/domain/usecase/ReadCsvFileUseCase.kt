@@ -1,16 +1,13 @@
 package com.mvclopes.wtest.domain.usecase
 
 import android.content.Context
-import android.os.Environment
 import android.util.Log
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
-import com.mvclopes.wtest.domain.repository.PostalCodeRepository
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 import com.mvclopes.wtest.utils.COMMA_SEPARATOR
 import com.mvclopes.wtest.utils.CSV_DIR_NAME
 import com.mvclopes.wtest.utils.CSV_FILE_NAME
 import java.io.BufferedReader
 import java.io.DataInputStream
-import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
 

@@ -1,6 +1,6 @@
 package com.mvclopes.wtest.stub
 
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 
 fun getPostalCodesEntityStub() = listOf(
     PostalCodeEntity(

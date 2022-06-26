@@ -1,4 +1,4 @@
-package com.mvclopes.wtest.data.datasource.local.entity
+package com.mvclopes.wtest.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

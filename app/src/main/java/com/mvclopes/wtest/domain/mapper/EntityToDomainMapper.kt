@@ -1,6 +1,6 @@
 package com.mvclopes.wtest.domain.mapper
 
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 import com.mvclopes.wtest.domain.model.PostalCode
 
 fun PostalCodeEntity.toDomain() = PostalCode(

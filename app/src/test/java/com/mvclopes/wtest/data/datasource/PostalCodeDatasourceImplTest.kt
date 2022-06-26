@@ -1,9 +1,8 @@
 package com.mvclopes.wtest.data.datasource
 
 
-import android.app.Instrumentation
-import com.mvclopes.wtest.data.datasource.local.dao.PostalCodeDao
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.dao.PostalCodeDao
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 import com.mvclopes.wtest.stub.getOnePostalCodeEntityStub
 import com.mvclopes.wtest.stub.getPostalCodeNumberStub
 import com.mvclopes.wtest.stub.getPostalCodesEntityStub

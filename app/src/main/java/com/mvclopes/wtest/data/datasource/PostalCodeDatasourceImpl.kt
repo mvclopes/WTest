@@ -1,7 +1,7 @@
 package com.mvclopes.wtest.data.datasource
 
-import com.mvclopes.wtest.data.datasource.local.dao.PostalCodeDao
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.dao.PostalCodeDao
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

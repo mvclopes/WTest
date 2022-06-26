@@ -1,6 +1,6 @@
 package com.mvclopes.wtest.domain.repository
 
-import com.mvclopes.wtest.data.datasource.local.entity.PostalCodeEntity
+import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 import com.mvclopes.wtest.domain.model.PostalCode
 import kotlinx.coroutines.flow.Flow
 

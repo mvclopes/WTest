@@ -50,6 +50,16 @@ class HomeViewModel(
         }
     }
 
+    fun isDatabaseEmpty() {
+        viewModelScope.launch {
+            repository.isDatabaseEmpty()
+                .flowOn(dispatcher)
+                .onStart { isLoading(true) }
+                .catch { handleError(it) }
+                .collect { handleIsDatabaseEmpty(it) }
+        }
+    }
+
     private fun postalCodeNumberQuery(searchTerm: String) {
         viewModelScope.launch {
             repository.searchByPostalCodeNumber("%$searchTerm%")
@@ -87,16 +97,6 @@ class HomeViewModel(
         if (!postalCodes.isNullOrEmpty()) {
             _matchedPostalCode.value = postalCodes
             _listToMonitoring.value = ListToMonitoring.Matched
-        }
-    }
-
-    fun isDatabaseEmpty() {
-        viewModelScope.launch {
-            repository.isDatabaseEmpty()
-                .flowOn(dispatcher)
-                .onStart { isLoading(true) }
-                .catch { handleError(it) }
-                .collect { handleIsDatabaseEmpty(it) }
         }
     }
 

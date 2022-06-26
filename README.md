@@ -30,4 +30,5 @@ Foram utilizadas as seguintes tecnologias:
 * Modularizar as funcionalidades (Ex.: banco de dados, serviço de download de arquivos).
 * Criação de testes instrumentados.
 * Pesquisa insensível a diacríticos.
+* Scroll infiníto no Recycler View
 * Implementação de novas funcionalidades (Ex.: tela de detalhes e de cadastro de código postal).

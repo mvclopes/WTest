@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -50,6 +51,7 @@ class HomeFragment : Fragment() {
         onFinishedDownload()
         setRecyclerAdapter()
         observeState()
+        customSearchQuery()
 
         return binding.root
     }
@@ -59,13 +61,31 @@ class HomeFragment : Fragment() {
         requireActivity().unregisterReceiver(onDownloadComplete)
     }
 
+    private fun customSearchQuery() {
+        binding.searchField.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { searchTerm ->
+                    viewModel.searchByCustomQuery(searchTerm)
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+    }
+
     private fun observeState() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.isVisible = isLoading
             binding.contentGroup.isVisible = isLoading.not()
         }
-        viewModel.postalCodeList.observe(viewLifecycleOwner) { codes ->
-            adapter.submitList(codes)
+        viewModel.listToMonitoring.observe(viewLifecycleOwner) { listToMonitoring ->
+            when (listToMonitoring) {
+                ListToMonitoring.PostalCode -> adapter.submitList(viewModel.postalCodeList.value)
+                ListToMonitoring.Matched -> adapter.submitList(viewModel.matchedPostalCode.value)
+            }
         }
     }
 

@@ -6,22 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".presentation.HomeFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textFieldValueLayout"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:endIconMode="clear_text"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="8dp"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search postal code"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textFieldValue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textAutoComplete" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -43,13 +38,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFieldValueLayout"
+            app:layout_constraintTop_toBottomOf="@+id/searchField"
             tools:listitem="@layout/postal_code_item_layout" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/contentGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="postalCodeRecycler, textFieldValueLayout"/>
+        app:constraint_referenced_ids="postalCodeRecycler, searchField"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

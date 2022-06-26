@@ -34,23 +34,46 @@ class HomeViewModel(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+    private var _matchedPostalCode = MutableLiveData<List<PostalCode>>()
+    val matchedPostalCode: LiveData<List<PostalCode>>
+        get() = _matchedPostalCode
+
+    private var _listToMonitoring = MutableLiveData<ListToMonitoring>(ListToMonitoring.None)
+    val listToMonitoring: LiveData<ListToMonitoring>
+        get() = _listToMonitoring
+
     fun searchByCustomQuery(searchTerm: String) {
-        viewModelScope.launch(dispatcher) {
-            when (verifyCustomQueryUseCase(searchTerm)) {
-                CustomQuery.NumberQuery ->
-                    repository.searchByPostalCodeNumber("%$searchTerm%")
-                CustomQuery.TextQuery ->
-                    repository.searchByPostalDesignation("%$searchTerm%")
-                CustomQuery.TextAndNumberQuery -> textAndNumberQuery(searchTerm)
-            }
+        when (verifyCustomQueryUseCase(searchTerm)) {
+            CustomQuery.NumberQuery -> postalCodeNumberQuery(searchTerm)
+            CustomQuery.TextQuery -> postalDesignationQuery(searchTerm)
+            CustomQuery.TextAndNumberQuery -> designationAndCodeNumberQuery(searchTerm)
         }
     }
 
-    private fun textAndNumberQuery(searchTerm: String) {
+    private fun postalCodeNumberQuery(searchTerm: String) {
+        viewModelScope.launch {
+            repository.searchByPostalCodeNumber("%$searchTerm%")
+                .flowOn(dispatcher)
+                .catch { handleError(it) }
+                .collect { handleOnSearch(it) }
+        }
+    }
+
+    private fun postalDesignationQuery(searchTerm: String) {
+        viewModelScope.launch {
+            repository.searchByPostalDesignation("%$searchTerm%")
+                .flowOn(dispatcher)
+                .catch { handleError(it) }
+                .collect { handleOnSearch(it) }
+        }
+    }
+
+    private fun designationAndCodeNumberQuery(searchTerm: String) {
         val postalCodeNumber = "%${searchTerm.filter { it.isDigit() }}%"
         val postalDesignation = "%${searchTerm.replace(" ","").filter { it.isDigit().not() }}%"
         viewModelScope.launch {
             repository.searchByDesignationAndCodeNumber(postalCodeNumber, postalDesignation)
+                .flowOn(dispatcher)
                 .catch { handleError(it) }
                 .collect { handleOnSearch(it) }
         }
@@ -61,7 +84,10 @@ class HomeViewModel(
     }
 
     private fun handleOnSearch(postalCodes: List<PostalCode>) {
-        if (!postalCodes.isNullOrEmpty()) _postalCodeList.value = postalCodes
+        if (!postalCodes.isNullOrEmpty()) {
+            _matchedPostalCode.value = postalCodes
+            _listToMonitoring.value = ListToMonitoring.Matched
+        }
     }
 
     fun isDatabaseEmpty() {
@@ -104,8 +130,16 @@ class HomeViewModel(
                 .catch { handleError(it) }
                 .collect {
                     _postalCodeList.value = it
+                    _listToMonitoring.value = ListToMonitoring.PostalCode
                 }
         }
     }
 
 }
+
+sealed class ListToMonitoring {
+    object Matched: ListToMonitoring()
+    object PostalCode: ListToMonitoring()
+    object None: ListToMonitoring()
+}
+

@@ -9,7 +9,7 @@ import com.mvclopes.wtest.data.local.entity.PostalCodeEntity
 @Dao
 interface PostalCodeDao {
 
-    @Query("SELECT * FROM tb_cod_postal LIMIT 100")
+    @Query("SELECT * FROM tb_cod_postal LIMIT 1000")
     suspend fun getAll(): List<PostalCodeEntity>
 
     @Insert(onConflict = REPLACE)
